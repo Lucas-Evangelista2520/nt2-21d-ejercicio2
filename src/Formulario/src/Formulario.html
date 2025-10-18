@@ -1,23 +1,54 @@
 <div class="container-fluid mt-3">
-    <input 
-        type="text" 
-        class="form-control" 
-        v-model="criterioDeBusqueda"
-        placeholder="Ingresar un criterio de búsqueda..." 
-    />
-    <br />
-
-    <div class="card-deck m-0">
-        <div class="row">
-            <div class="col" v-for="persona in personasFiltradas" :key="persona.dni">
-            <div class="card mb-3">
-                <div class="card-body">
-                <h5 class="card-title">{{ getNombreCompleto(persona) }}</h5>
-                <p class="card-text">dni {{ persona.dni }}</p>
-                <a href="#" class="card-link">{{ persona.correo }}</a>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6 mb-2">
+      <label class="mb-1">Buscar por nombre o nombre + apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        v-model="filtroNombre"
+        placeholder="Ej: Ana, Juan Perez…"
+      />
     </div>
+
+    <div class="col-md-6 mb-2">
+      <label class="mb-1">Buscar por DNI</label>
+      <input
+        type="text"
+        class="form-control"
+        v-model="filtroDni"
+        inputmode="numeric"
+        placeholder="Ej: 20442873"
+      />
+    </div>
+  </div>
+
+    <div v-if="mostrarAlerta()" class="alert alert-warning mt-2">
+        ⚠️ Debes ingresar al menos 3 caracteres en el filtro de nombre o DNI
+    </div>
+
+
+  <div class="d-flex gap-2 mb-3">
+    <button class="btn btn-secondary" @click="limpiar">Limpiar filtros</button>
+    <span class="align-self-center text-muted ms-2">
+      {{ personasFiltradas.length }} resultado(s)
+    </span>
+  </div>
+
+  <div class="card-deck m-0">
+    <div class="row">
+      <div class="col" v-for="persona in personasFiltradas" :key="persona.dni">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ getNombreCompleto(persona) }}</h5>
+            <p class="card-text">DNI {{ persona.dni }}</p>
+            <a :href="`mailto:${persona.correo}`" class="card-link">{{ persona.correo }}</a>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="personasFiltradas.length === 0" class="col-12">
+        <div class="alert alert-info">No se encontraron resultados con esos filtros.</div>
+      </div>
+    </div>
+  </div>
+</div>
