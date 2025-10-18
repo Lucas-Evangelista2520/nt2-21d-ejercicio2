@@ -1,0 +1,23 @@
+<div class="container-fluid mt-3">
+    <input 
+        type="text" 
+        class="form-control" 
+        v-model="criterioDeBusqueda"
+        placeholder="Ingresar un criterio de búsqueda..." 
+    />
+    <br />
+
+    <div class="card-deck m-0">
+        <div class="row">
+            <div class="col" v-for="persona in personasFiltradas" :key="persona.dni">
+            <div class="card mb-3">
+                <div class="card-body">
+                <h5 class="card-title">{{ getNombreCompleto(persona) }}</h5>
+                <p class="card-text">dni {{ persona.dni }}</p>
+                <a href="#" class="card-link">{{ persona.correo }}</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
